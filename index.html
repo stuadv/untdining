@@ -172,19 +172,40 @@
       return false;
     }
     function mgOpen( day, hr, min, sec ) {
-      if ( day > 0 && day < 5 && hr >= 7 && hr < 20 ) {
-        return true;
-      } else if ( day == 5 && hr >= 7 && hr < 14 ) {
-        return true;
+      if ( day > 0 && day < 5 ) {
+        if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+          return true;
+        } else if ( hr >= 11 && hr < 14 ) {
+          return true;
+        } else if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 20 ) {
+          return true;
+        }
+      }
+      if ( day == 5 ) {
+        if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+          return true;
+        } else if ( hr >= 11 && hr < 14 ) {
+          return true;
+        }
       }
       return false;
     }
     function champsOpen( day, hr, min, sec ) {
-      if ( ( day > 0 && day < 5 ) && ( ( hr >= 7 && ( hr <= 9 && min < 30 ) ) || ( hr >= 11 && hr < 14 ) || ( ( hr >= 16 && min >= 30 ) && hr < 20 ) ) ) {
-        return true;
+      if ( day > 0 && day < 5 ) {
+        if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+          return true;
+        } else if ( hr >= 11 && hr < 14 ) {
+          return true;
+        } else if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 20 ) {
+          return true;
+        }
       }
-      if ( day == 5 && ( ( hr >= 7 && ( hr <= 9 && min < 30 ) ) || ( hr >= 11 && hr < 14 ) ) ) {
-        return true;
+      if ( day == 5 ) {
+        if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+          return true;
+        } else if ( hr >= 11 && hr < 14 ) {
+          return true;
+        }
       }
       return false;
     }
@@ -193,7 +214,7 @@
         if ( hr >= 11 && hr < 14 ) {
           return true;
         }
-        if ( ( hr >= 16 && min >= 30 ) && hr < 19 ) {
+        if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 19 ) {
           return true;
         }
       } else if ( day == 5 ) {
