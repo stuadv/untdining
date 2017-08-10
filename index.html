@@ -91,7 +91,7 @@
         var secform = (sec < 10 ? '0' + sec : sec);
         var mer = ( hr > 12 ? 'PM' : 'AM');
         $('#dotw').html(dotwnames[dotw]);
-        $('#time').html(hr % 12 + ':' + minform + ':' + secform + ' ' + mer);
+        $('#time').html(( hr % 12 == 0 ? 12 : (hr % 12)) + ':' + minform + ':' + secform + ' ' + mer);
         // Bruce
         var bruce = $('#bruce');
         if ( bruceOpen(dotw, hr, min, sec) ) {
