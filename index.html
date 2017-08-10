@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which cafeterias are open?</title>
+    <!-- CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+      /* big font */
+      .bf {
+        font-size: 32px;
+      }
+      /* less big font */
+      .lbf {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <center>
+            <h1>Which UNT cafeterias are open?</h1>
+            <p class="lead">Because starving yourself isn't good.</p>
+          </center>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <center>
+            <p class="lead" style="font-size: 72px" id="dotw"></p>
+            <p class="lead" style="font-size: 72px" id="time"></p>
+            <table class="table">
+              <tr>
+                <td class="bf">Bruce</td>
+                <td class="bf">Kerr</td>
+                <td class="bf">Mean Greens @ Maple</td>
+                <td class="bf">Champs @ Victory</td>
+                <td class="bf">West</td>
+              </tr>
+              <tr>
+                <td id="bruce"></td>
+                <td id="kerr"></td>
+                <td id="mg"></td>
+                <td id="champs"></td>
+                <td id="west"></td>
+              </tr>
+              <tr>
+                <td><a class="btn btn-primary" href="http://www.dining.unt.edu/brucehall" target="_blank">Bruce Info</a></td>
+                <td><a class="btn btn-warning" href="http://www.dining.unt.edu/kerrhall" target="_blank">Kerr Info</a></td>
+                <td><a class="btn btn-success" href="http://www.dining.unt.edu/meangreens" target="_blank">Mean Greens @ Maple Info</a></td>
+                <td><a class="btn btn-info" href="http://www.dining.unt.edu/champs" target="_blank">Champs @ Victory Info</a></td>
+                <td><a class="btn btn-danger" href="http://www.dining.unt.edu/westhall" target="_blank">West Info</a></td>
+              </tr>
+            </table>
+          </center>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <p>Hours are for Fall 2017, based on UNT Dining posted hours on website. Local computer time is used. In case of incorrect time displayed, please do not use this tool outside of the Central timezone and ensure your computer's time is correct.</p>
+          <p>Report bugs and feature requests on GitHub.</p>
+          <p>&copy; 2017 Jeffrey Wang. All rights reserved. Not affiliated with UNT Dining.</p>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+    // business hours
+    var bhrs = {
+      "bruce": [
+        [
+          [7, 0], [21, 0]
+        ]
+      ]
+    };
+    // $(function() {
+      var refreshClock = setInterval(function() {
+        var date = new Date();
+        var dotw = date.getDay();
+        var dotwnames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var hr = date.getHours();
+        var min = date.getMinutes();
+        var minform = (min < 10 ? '0' + min : min);
+        var sec = date.getSeconds();
+        var secform = (sec < 10 ? '0' + sec : sec);
+        var mer = ( hr > 12 ? 'PM' : 'AM');
+        $('#dotw').html(dotwnames[dotw]);
+        $('#time').html(hr % 12 + ':' + minform + ':' + secform + ' ' + mer);
+        // Bruce
+        var bruce = $('#bruce');
+        if ( bruceOpen(dotw, hr, min, sec) ) {
+          bruce.attr('class', 'lbf success');
+          bruce.html('OPEN');
+        } else {
+          bruce.attr('class', 'lbf danger');
+          bruce.html('Closed');
+        }
+        // Kerr
+        var kerr = $('#kerr');
+        if ( kerrOpen(dotw, hr, min, sec) ) {
+          kerr.attr('class', 'lbf success');
+          kerr.html('OPEN');
+        } else {
+          kerr.attr('class', 'lbf danger');
+          kerr.html('Closed');
+        }
+        // Mean Greens
+        var mg = $('#mg');
+        if ( mgOpen(dotw, hr, min, sec) ) {
+          mg.attr('class', 'lbf success');
+          mg.html('OPEN');
+        } else {
+          mg.attr('class', 'lbf danger');
+          mg.html('Closed');
+        }
+        // Champs
+        var champs = $('#champs');
+        if ( champsOpen(dotw, hr, min, sec) ) {
+          champs.attr('class', 'lbf success');
+          champs.html('OPEN');
+        } else {
+          champs.attr('class', 'lbf danger');
+          champs.html('Closed');
+        }
+        // West
+        var west = $('#west');
+        if ( westOpen(dotw, hr, min, sec) ) {
+          west.attr('class', 'lbf success');
+          west.html('OPEN');
+        } else {
+          west.attr('class', 'lbf danger');
+          west.html('Closed');
+        }
+      }, 1000);
+    // });
+    function bruceOpen( day, hr, min, sec ) {
+      if ( day > 0 && day < 6 ) {
+        if ( day != 5 ) {
+          if ( hr >= 7 && hr < 21 ) {
+            return true;
+          }
+        } else {
+          if ( hr >= 7 && hr < 20 ) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+    function kerrOpen( day, hr, min, sec ) {
+      if ( day == 5 && hr >= 7 && ( hr <= 14 && min < 30 ) ) {
+        return true;
+      } else if ( day == 7 && hr >= 7 && hr < 20 ) {
+        return true;
+      } else if ( day == 6 ) {
+        if ( hr >= 7 && ( hr <= 14 && min < 30 ) ) {
+          return true;
+        } else if ( ( hr >= 16 && min >= 30 ) && hr < 8 ) {
+          return true;
+        }
+      } else {
+        if ( hr >= 7 && hr < 20 ) {
+          return true;
+        }
+      }
+      return false;
+    }
+    function mgOpen( day, hr, min, sec ) {
+      if ( day > 0 && day < 5 && hr >= 7 && hr < 20 ) {
+        return true;
+      } else if ( day == 5 && hr >= 7 && hr < 14 ) {
+        return true;
+      }
+      return false;
+    }
+    function champsOpen( day, hr, min, sec ) {
+      if ( ( day > 0 && day < 5 ) && ( ( hr >= 7 && ( hr <= 9 && min < 30 ) ) || ( hr >= 11 && hr < 14 ) || ( ( hr >= 16 && min >= 30 ) && hr < 20 ) ) ) {
+        return true;
+      }
+      if ( day == 5 && ( ( hr >= 7 && ( hr <= 9 && min < 30 ) ) || ( hr >= 11 && hr < 14 ) ) ) {
+        return true;
+      }
+      return false;
+    }
+    function westOpen( day, hr, min, sec ) {
+      if ( day > 0 && day < 5 ) {
+        if ( hr >= 11 && hr < 14 ) {
+          return true;
+        }
+        if ( ( hr >= 16 && min >= 30 ) && hr < 19 ) {
+          return true;
+        }
+      } else if ( day == 5 ) {
+        if ( hr >= 11 && hr < 14 ) {
+          return true;
+        }
+      }
+      return false;
+    }
+    </script>
+  </body>
+</html>
