@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
     <head>
         <meta name="viewport"
             content="width=device-width, initial-scale=1.0">
@@ -24,7 +23,6 @@
 
         </style>
     </head>
-
     <body>
         <div class="container-fluid">
             <div class="row">
@@ -112,138 +110,151 @@
         <script src="http://momentjs.com/downloads/moment-timezone.min.js"></script>
         <script src="http://momentjs.com/downloads/moment-timezone-with-data-2012-2022.min.js"></script>
         <script>
-            // $(function() {
-            var refreshClock = setInterval(function() {
-                var now = moment().tz("America/Chicago");
-                var dotw = now.day();
-                var dotwnames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                var hr = now.hours();
-                var hrform = (hr % 12 == 0 ? 12 : (hr % 12));
-                var min = now.minutes();
-                var minform = (min < 10 ? '0' + min : min);
-                var sec = now.seconds();
-                var secform = (sec < 10 ? '0' + sec : sec);
-                var mer = (hr > 12 ? 'PM' : 'AM');
-                $('#dotw').html(dotwnames[dotw]);
-                $('#12-hour-time').html(hrform + ':' + minform + ':' + secform + ' ' + mer);
-                $('#24-hour-time').html(hr + ":" + minform + ":" + secform);
-                // Bruce
-                var bruce = $('#bruce');
-                if (bruceOpen(dotw, hr, min, sec)) {
-                    bruce.attr('class', 'lbf success');
-                    bruce.html('OPEN');
-                } else {
-                    bruce.attr('class', 'lbf danger');
-                    bruce.html('Closed');
-                }
-                // Kerr
-                var kerr = $('#kerr');
-                if (kerrOpen(dotw, hr, min, sec)) {
-                    kerr.attr('class', 'lbf success');
-                    kerr.html('OPEN');
-                } else {
-                    kerr.attr('class', 'lbf danger');
-                    kerr.html('Closed');
-                }
-                // Mean Greens
-                var mg = $('#mg');
-                if (mgOpen(dotw, hr, min, sec)) {
-                    mg.attr('class', 'lbf success');
-                    mg.html('OPEN');
-                } else {
-                    mg.attr('class', 'lbf danger');
-                    mg.html('Closed');
-                }
-                // Champs
-                var champs = $('#champs');
-                if (champsOpen(dotw, hr, min, sec)) {
-                    champs.attr('class', 'lbf success');
-                    champs.html('OPEN');
-                } else {
-                    champs.attr('class', 'lbf danger');
-                    champs.html('Closed');
-                }
-                // West
-                var west = $('#west');
-                if (westOpen(dotw, hr, min, sec)) {
-                    west.attr('class', 'lbf success');
-                    west.html('OPEN');
-                } else {
-                    west.attr('class', 'lbf danger');
-                    west.html('Closed');
-                }
-            }, 1000);
-            // });
-            function bruceOpen(day, hr, min, sec) {
-                if (day > 0 && day < 6) {
-                    if (day != 5) {
-                        if (hr >= 7 && hr < 21) {
-                            return true;
-                        }
-                    } else {
-                        if (hr >= 7 && hr < 20) {
-                            return true;
-                        }
-                    }
-                }
-                return false;
+        var refreshClock = setInterval(function() {
+            var now = moment().tz("America/Chicago");
+            var dotw = now.day();
+            var dotwnames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var hr = now.hours();
+            var hrform = (hr % 12 == 0 ? 12 : (hr % 12));
+            var min = now.minutes();
+            var minform = (min < 10 ? '0' + min : min);
+            var sec = now.seconds();
+            var secform = (sec < 10 ? '0' + sec : sec);
+            var mer = (hr > 12 ? 'PM' : 'AM');
+            $('#dotw').html(dotwnames[dotw]);
+            $('#12-hour-time').html(hrform + ':' + minform + ':' + secform + ' ' + mer);
+            $('#24-hour-time').html(hr + ":" + minform + ":" + secform);
+            // Bruce
+            var bruce = $('#bruce');
+            if (bruceOpen(dotw, hr, min, sec)) {
+                bruce.attr('class', 'lbf success');
+                bruce.html('OPEN');
+            } else {
+                bruce.attr('class', 'lbf danger');
+                bruce.html('Closed');
             }
-
-            function kerrOpen(day, hr, min, sec) {
-                if (day == 5 && hr >= 7 && (hr <= 14 && min < 30)) {
-                    return true;
-                } else if (day == 7 && hr >= 7 && hr < 20) {
-                    return true;
-                } else if (day == 6) {
-                    if (hr >= 7 && (hr <= 14 && min < 30)) {
-                        return true;
-                    } else if ((hr >= 16 && min >= 30) && hr < 8) {
-                        return true;
-                    }
-                } else {
-                    if (hr >= 7 && hr < 20) {
-                        return true;
-                    }
-                }
-                return false;
+            // Kerr
+            var kerr = $('#kerr');
+            if (kerrOpen(dotw, hr, min, sec)) {
+                kerr.attr('class', 'lbf success');
+                kerr.html('OPEN');
+            } else {
+                kerr.attr('class', 'lbf danger');
+                kerr.html('Closed');
             }
-
-            function mgOpen(day, hr, min, sec) {
-                if (day > 0 && day < 5 && hr >= 7 && hr < 20) {
-                    return true;
-                } else if (day == 5 && hr >= 7 && hr < 14) {
-                    return true;
-                }
-                return false;
+            // Mean Greens
+            var mg = $('#mg');
+            if (mgOpen(dotw, hr, min, sec)) {
+                mg.attr('class', 'lbf success');
+                mg.html('OPEN');
+            } else {
+                mg.attr('class', 'lbf danger');
+                mg.html('Closed');
             }
-
-            function champsOpen(day, hr, min, sec) {
-                if ((day > 0 && day < 5) && ((hr >= 7 && (hr <= 9 && min < 30)) || (hr >= 11 && hr < 14) || ((hr >= 16 && min >= 30) && hr < 20))) {
-                    return true;
-                }
-                if (day == 5 && ((hr >= 7 && (hr <= 9 && min < 30)) || (hr >= 11 && hr < 14))) {
-                    return true;
-                }
-                return false;
+            // Champs
+            var champs = $('#champs');
+            if (champsOpen(dotw, hr, min, sec)) {
+                champs.attr('class', 'lbf success');
+                champs.html('OPEN');
+            } else {
+                champs.attr('class', 'lbf danger');
+                champs.html('Closed');
             }
-
-            function westOpen(day, hr, min, sec) {
-                if (day > 0 && day < 5) {
-                    if (hr >= 11 && hr < 14) {
-                        return true;
-                    }
-                    if ((hr >= 16 && min >= 30) && hr < 19) {
-                        return true;
-                    }
-                } else if (day == 5) {
-                    if (hr >= 11 && hr < 14) {
-                        return true;
-                    }
-                }
-                return false;
+            // West
+            var west = $('#west');
+            if (westOpen(dotw, hr, min, sec)) {
+                west.attr('class', 'lbf success');
+                west.html('OPEN');
+            } else {
+                west.attr('class', 'lbf danger');
+                west.html('Closed');
             }
-
+        }, 1000);
+        function bruceOpen( day, hr, min, sec ) {
+          if ( day > 0 && day < 6 ) {
+            if ( day != 5 ) {
+              if ( hr >= 7 && hr < 21 ) {
+                return true;
+              }
+            } else {
+              if ( hr >= 7 && hr < 20 ) {
+                return true;
+              }
+            }
+          }
+          return false;
+        }
+        function kerrOpen( day, hr, min, sec ) {
+          if ( day == 5 && hr >= 7 && ( hr <= 14 && min < 30 ) ) {
+            return true;
+          } else if ( day == 7 && hr >= 7 && hr < 20 ) {
+            return true;
+          } else if ( day == 6 ) {
+            if ( hr >= 7 && ( hr <= 14 && min < 30 ) ) {
+              return true;
+            } else if ( ( hr >= 16 && min >= 30 ) && hr < 8 ) {
+              return true;
+            }
+          } else {
+            if ( hr >= 7 && hr < 20 ) {
+              return true;
+            }
+          }
+          return false;
+        }
+        function mgOpen( day, hr, min, sec ) {
+          if ( day > 0 && day < 5 ) {
+            if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+              return true;
+            } else if ( hr >= 11 && hr < 14 ) {
+              return true;
+            } else if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 20 ) {
+              return true;
+            }
+          }
+          if ( day == 5 ) {
+            if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+              return true;
+            } else if ( hr >= 11 && hr < 14 ) {
+              return true;
+            }
+          }
+          return false;
+        }
+        function champsOpen( day, hr, min, sec ) {
+          if ( day > 0 && day < 5 ) {
+            if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+              return true;
+            } else if ( hr >= 11 && hr < 14 ) {
+              return true;
+            } else if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 20 ) {
+              return true;
+            }
+          }
+          if ( day == 5 ) {
+            if ( hr >= 7 && ( hr < 9 || hr == 9 && min < 30 ) ) {
+              return true;
+            } else if ( hr >= 11 && hr < 14 ) {
+              return true;
+            }
+          }
+          return false;
+        }
+        function westOpen( day, hr, min, sec ) {
+          if ( day > 0 && day < 5 ) {
+            if ( hr >= 11 && hr < 14 ) {
+              return true;
+            }
+            if ( ( hr >= 16 && min >= 30 || hr >= 17 ) && hr < 19 ) {
+              return true;
+            }
+          } else if ( day == 5 ) {
+            if ( hr >= 11 && hr < 14 ) {
+              return true;
+            }
+          }
+          return false;
+        }
         </script>
     </body>
-
 </html>
