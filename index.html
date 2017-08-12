@@ -11,16 +11,13 @@
             crossorigin="anonymous">
         <style>
             /* big font */
-
             .bf {
                 font-size: 32px;
             }
             /* less big font */
-
             .lbf {
                 font-size: 24px;
             }
-
         </style>
     </head>
     <body>
@@ -118,7 +115,7 @@
             var minform = (min < 10 ? '0' + min : min);
             var sec = now.seconds();
             var secform = (sec < 10 ? '0' + sec : sec);
-            var mer = (hr > 12 ? 'PM' : 'AM');
+            var mer = (hr >= 12 ? 'PM' : 'AM');
             $('#dotw').html(dotwnames[dotw]);
             $('#12-hour-time').html(hrform + ':' + minform + ':' + secform + ' ' + mer);
             $('#24-hour-time').html(hr + ":" + minform + ":" + secform);
