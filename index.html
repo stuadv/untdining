@@ -11,13 +11,16 @@
             crossorigin="anonymous">
         <style>
             /* big font */
+
             .bf {
                 font-size: 32px;
             }
             /* less big font */
+
             .lbf {
                 font-size: 24px;
             }
+
         </style>
     </head>
     <body>
@@ -180,14 +183,16 @@
           return false;
         }
         function kerrOpen( day, hr, min, sec ) {
-          if ( day == 5 && hr >= 7 && ( hr <= 14 && min < 30 ) ) {
-            return true;
+          if ( day == 5 ) {
+            if ( hr >= 7 && ( hr < 14 || hr == 14 && min < 30 ) ) {
+              return true;
+            }
           } else if ( day == 7 && hr >= 7 && hr < 20 ) {
             return true;
           } else if ( day == 6 ) {
-            if ( hr >= 7 && ( hr <= 14 && min < 30 ) ) {
+            if ( hr >= 7 && ( hr < 14 || hr == 14 && min < 30 ) ) {
               return true;
-            } else if ( ( hr >= 16 && min >= 30 ) && hr < 8 ) {
+            } else if ( ( hr == 16 && min >= 30 || hr > 16 ) && hr < 20 ) {
               return true;
             }
           } else {
