@@ -44,7 +44,8 @@
                         <p class="lead" style="font-size: 68px" id="12-hour-time"></p>
                         <p class="lead" style="font-size: 68px" id="24-hour-time"></p>
                         <p><button class="btn btn-default btn-lg" id="timetoggle">Toggle military time</button></p>
-                        <!-- <div class="alert alert-warning"><b>Notice: First Flight Hours are not loaded in.</b> Please see <a href="http://www.dining.unt.edu/first-flight-week-hours-2017">this page</a> for more info.</div> -->
+<!--                         <div class="alert alert-warning"><b>Notice: First Flight Hours are not loaded in.</b> Please see <a href="http://www.dining.unt.edu/first-flight-week-hours-2017">this page</a> for more info.</div> -->
+                      <div class="alert alert-warning"><b>Bruce has special hours until further notice.</b><br />Due to HVAC issues, Bruce Cafeteria is operating on a limited schedule with a limited menu. See <a href="http://www.dining.unt.edu/brucehall">this page</a> for more info.</div>
                         <table class="table">
                             <tr>
                                 <td class="bf">Bruce</td>
@@ -171,16 +172,31 @@
             }
         }, 1000);
         function bruceOpen( day, hr, min, sec ) {
-          if ( day > 0 && day < 6 ) {
-            if ( day != 5 ) {
-              if ( hr >= 7 && hr < 21 ) {
+          var special = true; // special HVAC hours
+          if ( special ) {
+            if ( day > 0 && day < 6 ) {
+              if ( hr >= 7 && hr < 9 ) {
                 return true;
-              }
-            } else {
-              if ( hr >= 7 && hr < 20 ) {
+              } else if ( hr >= 11 && hr < 14 ) {
                 return true;
+              } else if ( hr >= 17 && hr < 19 ) {
+                return true;
+              } else {
+                return false;
               }
             }
+          } else {
+              if ( day > 0 && day < 6 ) {
+                if ( day != 5 ) {
+                  if ( hr >= 7 && hr < 21 ) {
+                    return true;
+                  }
+                } else {
+                  if ( hr >= 7 && hr < 20 ) {
+                    return true;
+                  }
+                }
+              }
           }
           return false;
         }
